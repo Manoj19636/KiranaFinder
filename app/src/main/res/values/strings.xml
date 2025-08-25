@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">KiranaFinder2</string>
+    <string name="web_client_id">166054839598-10lmkjueoju29rc2lka4ug0tse876hsb.apps.googleusercontent.com
+</string>
+
+    <!-- 🎯 CRITICAL: Your actual Firebase Web Client ID -->
+    <string name="default_web_client_id">166054839598-10lmkjueoju29rc2lka4ug0tse876hsb.apps.googleusercontent.com
+    </string>
+</resources>
+
+

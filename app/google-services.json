@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "166054839598",
+    "project_id": "kiranafinder2",
+    "storage_bucket": "kiranafinder2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166054839598:android:4c243e4b5a57a9989226bf",
+        "android_client_info": {
+          "package_name": "com.example678.kiranafinder2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166054839598-unvi2hjgs0udl9tajhcmlvshiomo4skl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example678.kiranafinder2",
+            "certificate_hash": "63ee079532b3bbc18da08897c417344c6f76a043"
+          }
+        },
+        {
+          "client_id": "166054839598-10lmkjueoju29rc2lka4ug0tse876hsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR5O0IONQSFlyocJewA40vevQShG-iOQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166054839598-10lmkjueoju29rc2lka4ug0tse876hsb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
