@@ -66,7 +66,6 @@ fun EveningEssentialsApp(
     // 🎯 ENHANCED: Comprehensive state logging
     Log.d("EveningEssentialsApp", "🎨 UI State: auth=${authState.isAuthenticated}, loading=${authState.isLoading}, user=${authState.user?.displayName}")
 
-
     // 🎯 STEP 3: Immediate check on startup
     LaunchedEffect(Unit) {
         delay(200) // Small delay for Firebase to be ready

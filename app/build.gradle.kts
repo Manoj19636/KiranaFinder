@@ -84,6 +84,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
 
 
+     implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
 
 

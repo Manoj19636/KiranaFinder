@@ -2,7 +2,10 @@ package com.example678.kiranafinder2.presentation.ui.map
 
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
@@ -14,7 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example678.kiranafinder2.presentation.ui.component.AddNewStoreDialog
 import com.example678.kiranafinder2.presentation.ui.component.StoreDialog
@@ -43,21 +48,25 @@ fun MapScreen(
         )
     }
 
-    // 🎯 KEY FIX: Animate camera when user location is detected
-    LaunchedEffect(uiState.userLocation) {
-        uiState.userLocation?.let { userLocation ->
-            val userLatLng = LatLng(userLocation.latitude, userLocation.longitude)
-            Log.d("MapScreen", "🎥 Animating camera to user location: $userLatLng")
+    // ✅ PERFECT SOLUTION - Animates once, never again
+    LaunchedEffect(uiState.userLocation, uiState.hasAnimatedToUserLocation) {
+        // Only animate if we have user location AND haven't animated yet
+        if (uiState.userLocation != null && !uiState.hasAnimatedToUserLocation) {
+            val userLatLng = LatLng(uiState.userLocation!!.latitude, uiState.userLocation!!.longitude)
+            Log.d("MapScreen", "🎥 First time animating camera to user location: $userLatLng")
 
-            // ✅ CORRECT: Use animate() with CameraPosition directly
             cameraPositionState.animate(
                 com.google.android.gms.maps.CameraUpdateFactory.newCameraPosition(
                     CameraPosition.fromLatLngZoom(userLatLng, 16f)
                 ),
-                durationMs = 1500 // Smooth 1.5 second animation
+                durationMs = 1500
             )
+
+            // Mark as animated so it never happens again
+            viewModel.markCameraAsAnimated()
         }
     }
+
 
     // 🌍 GLOBAL LOCATION DETECTION: Works for users anywhere in the world
     LocationPermissionHandler(
@@ -112,8 +121,9 @@ fun MapScreen(
                 )
 
                 // 📍 User Location Marker (works globally)
+
                 uiState.userLocation?.let { userLocation ->
-                    Marker(
+                    MarkerComposable(
                         state = MarkerState(
                             position = LatLng(
                                 userLocation.latitude,
@@ -121,12 +131,45 @@ fun MapScreen(
                             )
                         ),
                         title = "Your Location",
-                        snippet = "📍 Accuracy: ${userLocation.accuracy.toInt()}m",
-                        icon = BitmapDescriptorFactory.defaultMarker(
-                            BitmapDescriptorFactory.HUE_BLUE
-                        )
-                    )
+                        snippet = "📍 Accuracy: ${userLocation.accuracy.toInt()}m"
+                    ) {
+                        // 🎨 CUSTOM USER MARKER DESIGN
+                        Box(
+                            modifier = Modifier.size(40.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            // Outer pulsing circle
+                            Box(
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .background(
+                                        Color(0xFF2196F3).copy(alpha = 0.3f),
+                                        CircleShape
+                                    )
+                            )
+
+                            // Inner solid circle
+                            Box(
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .background(
+                                        Color(0xFF2196F3),
+                                        CircleShape
+                                    )
+                                    .border(3.dp, Color.White, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "YOU",
+                                    color = Color.White,
+                                    fontSize = 8.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
                 }
+
 
                 // 🔵 5km Radius Circle (centered on user location)
                 if (uiState.showRadiusCircle && uiState.userLocation != null) {
@@ -235,7 +278,7 @@ fun MapScreen(
                         )
                         if (uiState.nearbyStores.isNotEmpty()) {
                             Text(
-                                text = "🏪 ${uiState.nearbyStores.size} stores within ${uiState.radiusKm}km",
+                                text = "🏪 ${uiState.nearbyStores.size -1 } stores within ${uiState.radiusKm}km",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -289,6 +332,7 @@ fun MapScreen(
             StoreDialog(
                 store = uiState.selectedStore!!,
                 onDismiss = viewModel::dismissStoreDialog,
+                uiState = uiState, // ✅ Add this line
                 onUpdateStatus = { status, note ->
                     viewModel.updateStoreStatus(uiState.selectedStore!!.id, status, note)
                 }

@@ -13,6 +13,10 @@ data class MapUiState(
     val showStoreDialog: Boolean = false,
     val error: String? = null,
 
+    // ✅ ADD THIS FLAG
+    val hasAnimatedToUserLocation: Boolean = false, // New flag to track initial animation
+    val isUpdatingStore: Boolean = false, // Add this flag
+
     // New store registration fields
     val newStoreLocation: LatLng? = null,
     val showNewStoreDialog: Boolean = false,

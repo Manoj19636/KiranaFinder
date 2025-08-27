@@ -8,6 +8,7 @@ import com.example678.kiranafinder2.domain.repository.AuthRepository
 import com.example678.kiranafinder2.domain.usecase.*
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -155,55 +156,110 @@ class MapViewModel @Inject constructor(
             showStoreDialog = false
         )
     }
-
-    // 🔄 UPDATE STORE STATUS WITH USER STATS INCREMENT
     fun updateStoreStatus(storeId: String, status: StoreStatus, note: String = "") {
         Log.d(TAG, "🔄 Updating store status: $storeId -> $status")
 
         viewModelScope.launch {
             try {
-                // Get current user ID
+                // ✅ Set updating flag - prevents dialog flicker
+                _uiState.value = _uiState.value.copy(isUpdatingStore = true)
+
                 val currentUser = authRepository.getCurrentUser()
                 val userId = currentUser?.id
 
                 if (userId != null) {
-                    // Update the store
+                    // Update store
                     updateStoreStatusUseCase(storeId, status, note)
 
-                    // 🎯 INCREMENT USER STATS
-                    val reputationPoints = when {
-                        note.isNotBlank() && note.length > 10 -> 10 // Extra points for helpful notes
-                        else -> 5 // Standard points for status update
-                    }
-
-                    // Update user statistics in Firestore
+                    // Update user stats
                     authRepository.updateUserStats(
                         userId = userId,
                         contributionIncrease = 1,
-                        reputationIncrease = reputationPoints
-                    ).onSuccess {
-                        Log.d(TAG, "✅ User stats updated: +1 contribution, +$reputationPoints reputation")
-                    }.onFailure { error ->
-                        Log.e(TAG, "❌ Failed to update user stats: ${error.message}")
-                    }
+                        reputationIncrease = if (note.isNotBlank()) 10 else 5
+                    )
 
-                    // Refresh stores after update
+                    // Refresh stores
                     _uiState.value.currentLocation?.let { location ->
                         loadNearbyStores(location.latitude, location.longitude)
                     }
+
+                    // ✅ Clear updating flag and dismiss dialog
+                    _uiState.value = _uiState.value.copy(isUpdatingStore = false)
                     dismissStoreDialog()
 
                 } else {
-                    Log.w(TAG, "⚠️ No current user - cannot update stats")
-                    _uiState.value = _uiState.value.copy(error = "Please sign in to update stores")
+                    _uiState.value = _uiState.value.copy(
+                        isUpdatingStore = false,
+                        error = "Please sign in to update stores"
+                    )
+                    dismissStoreDialog()
                 }
 
             } catch (error: Exception) {
                 Log.e(TAG, "❌ Error updating store: ${error.message}")
-                _uiState.value = _uiState.value.copy(error = error.message)
+                _uiState.value = _uiState.value.copy(
+                    isUpdatingStore = false,
+                    error = error.message
+                )
+                dismissStoreDialog()
             }
         }
     }
+
+    // 🔄 UPDATE STORE STATUS WITH USER STATS INCREMENT
+//    fun updateStoreStatus(storeId: String, status: StoreStatus, note: String = "") {
+//        Log.d(TAG, "🔄 Updating store status: $storeId -> $status")
+//
+//        viewModelScope.launch {
+//            try {
+//                // Get current user ID
+//                val currentUser = authRepository.getCurrentUser()
+//                val userId = currentUser?.id
+//
+//                if (userId != null) {
+//                    // Update the store
+//                    updateStoreStatusUseCase(storeId, status, note)
+//
+//                    // 🎯 INCREMENT USER STATS
+//                    val reputationPoints = when {
+//                        note.isNotBlank() && note.length > 10 -> 10 // Extra points for helpful notes
+//                        else -> 5 // Standard points for status update
+//                    }
+//
+//                    // Update user statistics in Firestore
+//                    authRepository.updateUserStats(
+//                        userId = userId,
+//                        contributionIncrease = 1,
+//                        reputationIncrease = reputationPoints
+//                    ).onSuccess {
+//                        Log.d(TAG, "✅ User stats updated: +1 contribution, +$reputationPoints reputation")
+//                    }.onFailure { error ->
+//                        Log.e(TAG, "❌ Failed to update user stats: ${error.message}")
+//                    }
+//
+//                    // Refresh stores after update
+//                    _uiState.value.currentLocation?.let { location ->
+//                        loadNearbyStores(location.latitude, location.longitude)
+//                    }
+//                    dismissStoreDialog()
+//
+//                } else {
+//                    Log.w(TAG, "⚠️ No current user - cannot update stats")
+//                    _uiState.value = _uiState.value.copy(error = "Please sign in to update stores")
+//                }
+//
+//            } catch (error: Exception) {
+//                Log.e(TAG, "❌ Error updating store: ${error.message}")
+//                _uiState.value = _uiState.value.copy(error = error.message)
+//            }
+//        }
+//    }
+
+    // ✅ ADD THIS FUNCTION to MapViewModel
+    fun markCameraAsAnimated() {
+        _uiState.value = _uiState.value.copy(hasAnimatedToUserLocation = true)
+    }
+
 
     // 🗺️ MAP INTERACTIONS
     fun onMapLongPress(location: LatLng) {
