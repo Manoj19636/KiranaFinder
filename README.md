@@ -140,12 +140,33 @@ Evening Essentials Finder
 
 ## 📱 Screenshots
 
+
+
 <div align="center">
 
-🔐 Authentication | 🗺️ Map View | 🏪 Store Details | 👤 Profile  
-<img src="screenshots/login.png" width="150"/> <img src="screenshots/map.png" width="150"/> <img src="screenshot/store.png" width="150"/> <img src="screenshot/profile.png" width="150"/>  
+<table>
+  <tr>
+    <td align="center">
+      🔐 Authentication <br/>
+      <img src="screenshots/authscreen.png" width="150"/>
+    </td>
+    <td align="center">
+      🗺️ Map View <br/>
+      <img src="screenshots/map2.png" width="150"/>
+    </td>
+    <td align="center">
+      🏪 Store Details <br/>
+      <img src="screenshots/store1.png" width="150"/>
+    </td>
+    <td align="center">
+      👤 Profile <br/>
+      <img src="screenshots/profile.png" width="150"/>
+    </td>
+  </tr>
+</table>
 
 </div>
+
 
 ---
 
@@ -277,4 +298,5 @@ A: Planned for future release.
 
 🌟 Star this project if you found it helpful!
 Built with ❤️ for communities worldwide
-</div> ```
+
+</div> ``
