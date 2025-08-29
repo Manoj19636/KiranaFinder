@@ -31,6 +31,12 @@ import com.example678.kiranafinder2.presentation.ui.component.LocationPermission
 import com.example678.kiranafinder2.presentation.ui.component.StoreDialog
 import com.example678.kiranafinder2.presentation.viewmodel.MapViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.maps.android.compose.MarkerInfoWindow
+import com.google.maps.android.compose.rememberMarkerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.text.style.TextAlign
+import com.example678.kiranafinder2.domain.model.StoreStatus
+
 
 @Composable
 fun MapScreen(

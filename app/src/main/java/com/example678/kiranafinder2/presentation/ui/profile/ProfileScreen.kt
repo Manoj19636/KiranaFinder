@@ -3,12 +3,14 @@ package com.example678.kiranafinder2.presentation.ui.profile
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
@@ -84,6 +86,7 @@ fun ProfileScreen(
                     ) {
                         Column(
                             modifier = Modifier
+                                .fillMaxWidth()
                                 .background(
                                     Brush.radialGradient(
                                         colors = listOf(
@@ -94,7 +97,8 @@ fun ProfileScreen(
                                     )
                                 )
                                 .padding(24.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
                         ) {
                             // Profile Photo with Glow
                             Box {

@@ -212,8 +212,8 @@ fun StoreDialog(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(Icons.Default.CheckCircle, null, modifier = Modifier.size(12.dp))
-                                    Spacer(modifier = Modifier.width(3.dp))
-                                    Text("Open", fontSize = 11.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+                                    Spacer(modifier = Modifier.width(2.dp))
+                                    Text("Open", fontSize = 9.sp, fontWeight = FontWeight.Bold, maxLines = 1)
                                 }
                             }
                         }
@@ -244,8 +244,8 @@ fun StoreDialog(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(Icons.Default.Cancel, null, modifier = Modifier.size(12.dp))
-                                    Spacer(modifier = Modifier.width(3.dp))
-                                    Text("Closed", fontSize = 11.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+                                    Spacer(modifier = Modifier.width(2.dp))
+                                    Text("Closed", fontSize = 9.sp, fontWeight = FontWeight.Bold, maxLines = 1)
                                 }
                             }
                         }

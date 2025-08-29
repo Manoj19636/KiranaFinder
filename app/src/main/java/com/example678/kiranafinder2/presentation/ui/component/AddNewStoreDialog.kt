@@ -336,10 +336,10 @@ fun AddNewStoreDialog(
                                     contentDescription = null,
                                     modifier = Modifier.size(16.dp)
                                 )
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(5.dp))
                                 Text(
                                     text = "Cancel",
-                                    fontSize = 14.sp,
+                                    fontSize = 11.sp,
                                     fontWeight = FontWeight.Medium
                                 )
                             }
