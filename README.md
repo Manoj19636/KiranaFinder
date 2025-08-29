@@ -148,19 +148,19 @@ Evening Essentials Finder
   <tr>
     <td align="center">
       🔐 Authentication <br/>
-      <img src="screenshots/authscreen.png" width="150"/>
+      <img src="screenshots/authscreen.png" width="220"/>
     </td>
     <td align="center">
       🗺️ Map View <br/>
-      <img src="screenshots/map2.png" width="150"/>
+      <img src="screenshots/map2.png" width="220"/>
     </td>
     <td align="center">
       🏪 Store Details <br/>
-      <img src="screenshots/store1.png" width="150"/>
+      <img src="screenshots/store1.png" width="220"/>
     </td>
     <td align="center">
       👤 Profile <br/>
-      <img src="screenshots/profile.png" width="150"/>
+      <img src="screenshots/profile.png" width="220"/>
     </td>
   </tr>
 </table>
