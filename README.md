@@ -143,7 +143,7 @@ Evening Essentials Finder
 <div align="center">
 
 🔐 Authentication | 🗺️ Map View | 🏪 Store Details | 👤 Profile  
-<img src="https://via.placeholder.com/200x400/4285F4/FFFFFF?text=Sign+In" width="150"/> <img src="https://via.placeholder.com/200x400/34A853/FFFFFF?text=Map+View" width="150"/> <img src="https://via.placeholder.com/200x400/EA4335/FFFFFF?text=Store+Info" width="150"/> <img src="https://via.placeholder.com/200x400/FBBC04/000000?text=Profile" width="150"/>  
+<img src="screenshots/login.png" width="150"/> <img src="screenshots/map.png" width="150"/> <img src="screenshot/store.png" width="150"/> <img src="screenshot/profile.png" width="150"/>  
 
 </div>
 
