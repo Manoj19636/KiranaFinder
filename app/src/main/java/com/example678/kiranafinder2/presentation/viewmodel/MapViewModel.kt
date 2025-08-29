@@ -206,54 +206,7 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    // 🔄 UPDATE STORE STATUS WITH USER STATS INCREMENT
-//    fun updateStoreStatus(storeId: String, status: StoreStatus, note: String = "") {
-//        Log.d(TAG, "🔄 Updating store status: $storeId -> $status")
-//
-//        viewModelScope.launch {
-//            try {
-//                // Get current user ID
-//                val currentUser = authRepository.getCurrentUser()
-//                val userId = currentUser?.id
-//
-//                if (userId != null) {
-//                    // Update the store
-//                    updateStoreStatusUseCase(storeId, status, note)
-//
-//                    // 🎯 INCREMENT USER STATS
-//                    val reputationPoints = when {
-//                        note.isNotBlank() && note.length > 10 -> 10 // Extra points for helpful notes
-//                        else -> 5 // Standard points for status update
-//                    }
-//
-//                    // Update user statistics in Firestore
-//                    authRepository.updateUserStats(
-//                        userId = userId,
-//                        contributionIncrease = 1,
-//                        reputationIncrease = reputationPoints
-//                    ).onSuccess {
-//                        Log.d(TAG, "✅ User stats updated: +1 contribution, +$reputationPoints reputation")
-//                    }.onFailure { error ->
-//                        Log.e(TAG, "❌ Failed to update user stats: ${error.message}")
-//                    }
-//
-//                    // Refresh stores after update
-//                    _uiState.value.currentLocation?.let { location ->
-//                        loadNearbyStores(location.latitude, location.longitude)
-//                    }
-//                    dismissStoreDialog()
-//
-//                } else {
-//                    Log.w(TAG, "⚠️ No current user - cannot update stats")
-//                    _uiState.value = _uiState.value.copy(error = "Please sign in to update stores")
-//                }
-//
-//            } catch (error: Exception) {
-//                Log.e(TAG, "❌ Error updating store: ${error.message}")
-//                _uiState.value = _uiState.value.copy(error = error.message)
-//            }
-//        }
-//    }
+
 
     // ✅ ADD THIS FUNCTION to MapViewModel
     fun markCameraAsAnimated() {
